@@ -8,21 +8,21 @@ sys.path.append(root)
 import PyNnet
 import time
 from sklearn import preprocessing
-from sklearn.cross_validation import train_test_split 
+from sklearn.model_selection import train_test_split
 
 #==============================================================================
 # Read dataset (csv)
 #==============================================================================
 # read training dataset
 current_directory = os.getcwd()
-csv_training = csv.reader(open(current_directory + '\\training.csv', 'rb')) 
+csv_training = csv.reader(open(current_directory + '/tests/training.csv', 'rb'))
 training = []
 for row in csv_training:
     training.append(row)        
 training = np.array(training, dtype=float)
 
 # read test dataset
-csv_test = csv.reader(open(current_directory + '\\test.csv', 'rb')) 
+csv_test = csv.reader(open(current_directory + '/tests/test.csv', 'rb'))
 test = []
 for row in csv_test:
     test.append(row)        
