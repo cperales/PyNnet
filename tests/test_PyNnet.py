@@ -58,14 +58,14 @@ print '+Normalization and split done!'
 
 start_time = time.time()
 
-NN = PyNnet.nnet(    size_layers    = [X_tr_n.shape[1],20,20,1], 
+NN = PyNnet.nnet(    size_layers    = [X_tr_n.shape[1],10,1],
                     learning_rate   = 0.01,
                     batchsize       = 105,
                     Lambda          = 0, 
-                    epochs          = 500, 
+                    epochs          = 200,
                     out_activation  = 'sigmoid', 
-                    loss            = 'log-loss', 
-                    #loss            = 'quadratic-loss',
+                    # loss            = 'log-loss',
+                    loss            = 'quadratic-loss',
                     #loss            = 'quadratic-loss',
                     evals           = ['accuracy', 'log-loss'], 
                     #optimization    = 'Backpropagation',

@@ -220,12 +220,13 @@ class iRPROPplus(Learner):
         self.Delta_w_pre = [np.ones((size_layers[i]+1, size_layers[i+1]), 
                                    dtype='float32')*self.Delta_zero 
                                    for i in xrange(self.nn_size-1)]
-        self.E = 0
-        self.E_pre = 0
+        self.E = np.inf
+        self.E_pre = np.inf
     
     def run( self, X, y, callback):
 
         # through the epochs
+        self.E = 0.0
         for e in xrange(self.epochs):
             # compute gradients
             self.compute_dEdW(X, y, self.weights)
@@ -256,8 +257,8 @@ class iRPROPplus(Learner):
                 self.dEdW_pre[i] = self.dEdW[i]
                 self.Delta_pre[i] = self.Delta[i]
                 self.Delta_w_pre[i] = self.Delta_w[i]
-                self.E_pre = self.E
-            self.E = callback(e)
+            self.E_pre = self.E
+            self.E = callback(e)[-1]
 
 class scipy_minimize(Learner):   
     
