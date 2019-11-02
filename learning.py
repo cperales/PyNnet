@@ -66,11 +66,11 @@ class Learner(object):
             delta[-1] = weights * ( Z[-1] - y ) * self.out_activation_prime( Z[-1] )
         
         # compute hidden deltas
-        for i in xrange(self.nn_size-2, 0, -1):             
+        for i in range(self.nn_size-2, 0, -1):             
             delta[i-1] = np.dot(delta[i], self.W[i].transpose()[:,1:]) * self.activation_prime( Z[i][:,1:] ) 
 
         # compute gradient for each weight and layers
-        for i in xrange(0,self.nn_size-1):
+        for i in range(0,self.nn_size-1):
             self.dEdW[i] = np.dot( Z[i].transpose(), delta[i] ) / delta[i].shape[0] + self.Lambda * self.W[i];
 
     def set_W(self, W):
@@ -108,7 +108,7 @@ class Backpropagation(Learner):
             self.numbatches = int(self.numbatches)    
         
         # through the epochs
-        for e in xrange(self.epochs):            
+        for e in range(self.epochs):            
             # shuffle dataset
             np.random.seed(seed=self.random_state)
             kk = np.random.permutation(X.shape[0])
@@ -122,12 +122,12 @@ class Backpropagation(Learner):
                     batch_w = self.weights[kk[l*self.batchsize:(l+1)*self.batchsize]]
                     self.compute_dEdW(batch_x, batch_y, batch_w)
                     # apply gradient
-                    for j in xrange(self.nn_size-1):
+                    for j in range(self.nn_size-1):
                         self.W[j] = self.W[j] - np.multiply(self.learning_rate, self.dEdW[j])
                 else:
                     self.compute_dEdW(batch_x, batch_y)
                     # apply gradient
-                    for j in xrange(self.nn_size-1):
+                    for j in range(self.nn_size-1):
                         self.W[j] = self.W[j] - np.multiply(self.learning_rate, self.dEdW[j])          
             callback(e)                                             			
         
@@ -151,22 +151,22 @@ class iRPROPminus(Learner):
         # init "current" "old" gradient and Deltas
         self.dEdW_pre   = [np.zeros((size_layers[i]+1, size_layers[i+1]), 
                                     dtype='float32') 
-                                     for i in xrange(self.nn_size-1)]
+                                     for i in range(self.nn_size-1)]
         self.Delta      = [np.ones((size_layers[i]+1, size_layers[i+1]), 
                                    dtype='float32')*self.Delta_zero 
-                                    for i in xrange(self.nn_size-1)]
+                                    for i in range(self.nn_size-1)]
         self.Delta_pre  = [np.ones((size_layers[i]+1, size_layers[i+1]), 
                                    dtype='float32')*self.Delta_zero 
-                                   for i in xrange(self.nn_size-1)]
+                                   for i in range(self.nn_size-1)]
     
     def run( self, X, y, callback):
 
         # through the epochs
-        for e in xrange(self.epochs):
+        for e in range(self.epochs):
             # compute gradients
             self.compute_dEdW(X, y, self.weights)
             # through the layers
-            for i in xrange(self.nn_size-1):
+            for i in range(self.nn_size-1):
                 
                 # select specific weights
                 sel_pos = (self.dEdW_pre[i] * self.dEdW[i])>0.0
@@ -207,19 +207,19 @@ class iRPROPplus(Learner):
         
         self.dEdW_pre   = [np.zeros((size_layers[i]+1, size_layers[i+1]), 
                                     dtype='float32') 
-                                     for i in xrange(self.nn_size-1)]
+                                     for i in range(self.nn_size-1)]
         self.Delta      = [np.ones((size_layers[i]+1, size_layers[i+1]), 
                                    dtype='float32')*self.Delta_zero 
-                                    for i in xrange(self.nn_size-1)]
+                                    for i in range(self.nn_size-1)]
         self.Delta_pre  = [np.ones((size_layers[i]+1, size_layers[i+1]), 
                                    dtype='float32')*self.Delta_zero 
-                                   for i in xrange(self.nn_size-1)]
+                                   for i in range(self.nn_size-1)]
         self.Delta_w     = [np.ones((size_layers[i]+1, size_layers[i+1]), 
                                    dtype='float32')*self.Delta_zero 
-                                    for i in xrange(self.nn_size-1)]
+                                    for i in range(self.nn_size-1)]
         self.Delta_w_pre = [np.ones((size_layers[i]+1, size_layers[i+1]), 
                                    dtype='float32')*self.Delta_zero 
-                                   for i in xrange(self.nn_size-1)]
+                                   for i in range(self.nn_size-1)]
         self.E = np.inf
         self.E_pre = np.inf
     
@@ -227,11 +227,11 @@ class iRPROPplus(Learner):
 
         # through the epochs
         self.E = 0.0
-        for e in xrange(self.epochs):
+        for e in range(self.epochs):
             # compute gradients
             self.compute_dEdW(X, y, self.weights)
             # through the layers
-            for i in xrange(self.nn_size-1):
+            for i in range(self.nn_size-1):
                 
                 # select weights
                 sel_pos = (self.dEdW_pre[i] * self.dEdW[i])>0.0

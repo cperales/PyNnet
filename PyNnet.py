@@ -52,7 +52,7 @@ class nnet(object):
             self._out_activation        = self._softmax
             self._out_activation_prime  = self._softmax_prime
             if loss != 'log-likelihood':
-                print '++Loss function changed with log-likelihood due to softmax activation.'
+                print('++Loss function changed with log-likelihood due to softmax activation.')
                 self.loss = 'log-likelihood'  
 
         # set up activation functions and derivatives
@@ -213,14 +213,14 @@ class nnet(object):
             if self.X_val.size!=0:   
                 # check if evals is a list
                 if isinstance(self.evals, list): 
-                    for k in xrange(len(self.evals)):
+                    for k in range(len(self.evals)):
                         str += '%s train: %0.5f || %s val: %0.5f ||' %(self.evals[k], self.score_train[-1][k], self.evals[k], self.score_val[-1][k]) 
                 else:
                     str += '%s train: %0.5f || %s val: %0.5f ||'%(self.evals, self.score_train[-1], self.evals, self.score_val[-1])
             else:
                 # check if evals is a list
                 if isinstance(self.evals, list): 
-                    for k in xrange(len(self.evals)):
+                    for k in range(len(self.evals)):
                         str += '%s train: %0.5f ||'%(self.evals[k], self.score_train[-1][k])
                 else:
                     str += '%s train: %0.5f ||'%(self.evals, self.score_train[-1])
@@ -242,7 +242,7 @@ class nnet(object):
                 if init==True:
                     self.figure, self.axarr = plt.subplots(len(self.evals))
                     if len(self.evals) > 1:
-                        for k in xrange(len(self.evals)):
+                        for k in range(len(self.evals)):
                             self.lines_train[k], = self.axarr[k].plot([],[], label='Train')
                             if self.X_val.size!=0:
                                 self.lines_val[k], = self.axarr[k].plot([],[], label='Val')
@@ -260,12 +260,12 @@ class nnet(object):
                         self.axarr.set_title(self.evals[0])
                 else:
                     if len(self.evals) > 1:
-                        for k in xrange(len(self.evals)):
-                            score_train = [self.score_train[i][k] for i in xrange(len(self.score_train))]
+                        for k in range(len(self.evals)):
+                            score_train = [self.score_train[i][k] for i in range(len(self.score_train))]
                             self.lines_train[k].set_xdata(range(len(score_train)))        
                             self.lines_train[k].set_ydata(score_train)
                             if self.X_val.size!=0:
-                                score_val = [self.score_val[i][k] for i in xrange(len(self.score_val))]
+                                score_val = [self.score_val[i][k] for i in range(len(self.score_val))]
                                 self.lines_val[k].set_xdata(range(len(score_val)))
                                 self.lines_val[k].set_ydata(score_val)
                             self.axarr[k].relim()
@@ -274,11 +274,11 @@ class nnet(object):
                             self.figure.canvas.draw()
                             self.figure.canvas.flush_events()                    
                     else:
-                        score_train = [self.score_train[i][0] for i in xrange(len(self.score_train))]
+                        score_train = [self.score_train[i][0] for i in range(len(self.score_train))]
                         self.lines_train.set_xdata(range(len(score_train)))        
                         self.lines_train.set_ydata(score_train)
                         if self.X_val.size!=0:
-                            score_val = [self.score_val[i][0] for i in xrange(len(self.score_val))]
+                            score_val = [self.score_val[i][0] for i in range(len(self.score_val))]
                             self.lines_val.set_xdata(range(len(score_val)))
                             self.lines_val.set_ydata(score_val)
                         self.axarr.relim()
