@@ -15,20 +15,20 @@ from sklearn.model_selection import train_test_split
 #==============================================================================
 # read training dataset
 current_directory = os.getcwd()
-csv_training = csv.reader(open(current_directory + '/tests/training.csv', 'rb'))
+csv_training = csv.reader(open(current_directory + '/tests/training.csv', 'r'))
 training = []
 for row in csv_training:
-    training.append(row)        
+    training.append(row)
 training = np.array(training, dtype=float)
 
 # read test dataset
-csv_test = csv.reader(open(current_directory + '/tests/test.csv', 'rb'))
+csv_test = csv.reader(open(current_directory + '/tests/test.csv', 'r'))
 test = []
 for row in csv_test:
     test.append(row)        
 test = np.array(test, dtype=float)
 
-print '+Read csv done!'
+print('+Read csv done!')
 
 
 #==============================================================================
@@ -36,11 +36,11 @@ print '+Read csv done!'
 #==============================================================================
 training_c = training[:,[0,1]]
 labels_c = training[:,[2]]
-for i in xrange(20):
+for i in range(20):
     training_c = np.concatenate((training_c, training[:,[0,1]]), axis=0)
     labels_c = np.concatenate((labels_c, training[:,[2]]), axis=0)
 training_cc = training_c
-for i in xrange(10):
+for i in range(10):
     training_cc = np.concatenate((training_cc, training_c), axis=1)
 
 #==============================================================================
@@ -50,7 +50,7 @@ scaler          = preprocessing.StandardScaler().fit(training_cc)
 training_n      = scaler.transform(training_cc)
 X_tr_n, X_cv_n, y_tr, y_cv = train_test_split(training_cc, labels_c, test_size=0.5, random_state=0)
 
-print '+Normalization and split done!'
+print('+Normalization and split done!')
 
 #==============================================================================
 # Train Neural network
@@ -62,16 +62,16 @@ NN = PyNnet.nnet(    size_layers    = [X_tr_n.shape[1],10,1],
                     learning_rate   = 0.01,
                     batchsize       = 105,
                     Lambda          = 0, 
-                    epochs          = 200,
+                    epochs          = 50,
                     out_activation  = 'sigmoid', 
-                    # loss            = 'log-loss',
-                    loss            = 'quadratic-loss',
+                    loss            = 'log-loss',
+                    # loss            = 'quadratic-loss',
                     #loss            = 'quadratic-loss',
                     evals           = ['accuracy', 'log-loss'], 
-                    #optimization    = 'Backpropagation',
+                    # optimization    = 'Backpropagation',
                     #optimization    = 'iRPROP-',
-                    optimization    = 'iRPROP+',
-                    #optimization    = 'scipy_minimize_BFGS',
+                    # optimization    = 'iRPROP+',
+                    optimization    = 'scipy_minimize_BFGS',
                     #optimization    = 'scipy_minimize_Newton-CG',
                     #optimization    = 'scipy_minimize_CG',
                     plot_en         = True, 
@@ -86,5 +86,4 @@ NN.fit( X_tr_n,
          
 delay = time.time()-start_time 
 
-print '+Training done, time elapsed: %f [s]' %(delay)
-
+print('+Training done, time elapsed:', delay, '[s]')
